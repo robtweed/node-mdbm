@@ -1,4 +1,4 @@
-<h2>mdbMumpsClient.js</h2>
+<h2>node-mdbm</h2>
  
 node.js client for M/DB:Mumps (HTTP-enabled GT.M or Cache instance)
 
@@ -42,41 +42,41 @@ and then retrieve the value again (note the asynchronous nature of node.js will
 not guarantee the order in which the APIs below are executed in the Mumps back-end)
 
 <code>
-var sys = require("sys");
-var mdbmif = require("./mdbMumpsClient");
-
-var mdbm = new mdbmif.Client({
-   mdbId:'rob',
-   mdbSecret:'xxxxxxxx',
-   endPoint: '127.0.0.1'
-});
-
-mdbm.execute('Set', 'mdbmTest', {
-      Subscripts:["check","this","out"],
-      DataValue:"Too cool!"
-   },
-   function(error, results) {
-          if (error) { 
-             sys.print('Error: ' + error + "\n");
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
-          }
-          else {
-            sys.puts(results.ok + "\n");
-          }
-   }
-);
-
-mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
-   function(error, results) {
-          if (error) { 
-             sys.print('Error: ' + error + "\n");
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
-          }
-          else {
-            sys.puts("dataStatus=" + results.dataStatus + "\nvalue=" + results.value + "\n");
-          }
-   }
-);
+var sys = require("sys");<br />
+var mdbmif = require("./mdbMumpsClient");<br />
+<br />
+var mdbm = new mdbmif.Client({<br />
+   mdbId:'rob',<br />
+   mdbSecret:'xxxxxxxx',<br />
+   endPoint: '127.0.0.1'<br />
+});<br />
+<br />
+mdbm.execute('Set', 'mdbmTest', {<br />
+      Subscripts:["check","this","out"],<br />
+      DataValue:"Too cool!"<br />
+   },<br />
+   function(error, results) {<br />
+          if (error) { <br />
+             sys.print('Error: ' + error + "\n");<br />
+             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); <br />
+          }<br />
+          else {<br />
+            sys.puts(results.ok + "\n");<br />
+          }<br />
+   }<br />
+);<br />
+<br />
+mdbm.execute('Get', 'mdbmTest', ["check","this","out"],<br />
+   function(error, results) {<br />
+          if (error) { <br />
+             sys.print('Error: ' + error + "\n");<br />
+             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); <br />
+          }<br />
+          else {<br />
+            sys.puts("dataStatus=" + results.dataStatus + "\nvalue=" + results.value + "\n");<br />
+          }<br />
+   }<br />
+);<br />
 </code>
 
 Note: this global node could also have been created using SetJSON:
