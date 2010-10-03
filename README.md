@@ -34,26 +34,26 @@ eg
 To set the global:  
 
 
-   ^mdbmTest("check","this","out")="Too cool!"
+    ^mdbmTest("check","this","out")="Too cool!"
 
    
 and then retrieve the value again (note the asynchronous nature of node.js will 
 not guarantee the order in which the APIs below are executed in the Mumps back-end)
 
 
-   var sys = require("sys");
-   var mdbmif = require("./mdbMumpsClient");
-   
-   var mdbm = new mdbmif.Client({
-      mdbId:'rob',
-      mdbSecret:'xxxxxxxx',
-      endPoint: '127.0.0.1'
-   });
-   mdbm.execute('Set', 'mdbmTest', {
-         Subscripts:["check","this","out"],
-         DataValue:"Too cool!"
-      },
-      function(error, results) {
+    var sys = require("sys");
+    var mdbmif = require("./mdbMumpsClient");
+    
+    var mdbm = new mdbmif.Client({
+       mdbId:'rob',
+       mdbSecret:'xxxxxxxx',
+       endPoint: '127.0.0.1'
+    });
+    mdbm.execute('Set', 'mdbmTest', {
+          Subscripts:["check","this","out"],
+          DataValue:"Too cool!"
+       },
+       function(error, results) {
              if (error) { 
                 sys.print('Error: ' + error + "\n");
                 sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n");
@@ -61,10 +61,10 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
              else {
                sys.puts(results.ok + "\n");
              }
-      }
-   );
-   mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
-      function(error, results) {
+       }
+    );
+    mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
+       function(error, results) {
              if (error) {
                 sys.print('Error: ' + error + "\n");
                 sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n");
@@ -72,14 +72,14 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
              else {
                sys.puts("dataStatus=" + results.dataStatus + "\nvalue=" + results.value + "\n");
              }
-      }
-   );
+       }
+    );
 
 Note: this global node could also have been created using SetJSON:
 
-   var json = {"check":{"this":{"out":"Too cool!"}}};
-   mdbm.execute('SetJSON', 'mdbmTest', json,
-      function(error, results) {
+    var json = {"check":{"this":{"out":"Too cool!"}}};
+    mdbm.execute('SetJSON', 'mdbmTest', json,
+       function(error, results) {
              if (error) { 
                 sys.print('Error: ' + error + "\n");
                 sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
@@ -87,13 +87,13 @@ Note: this global node could also have been created using SetJSON:
              else {
                sys.puts(results.ok);
              }
-      }
-   );
+       }
+    );
  
 and the original JSON could be retrieved using:
 
-   mdbm.execute('GetJSON', 'mdbmTest','',
-      function(error, results) {
+    mdbm.execute('GetJSON', 'mdbmTest','',
+       function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n"); 
              sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
@@ -101,5 +101,5 @@ and the original JSON could be retrieved using:
           else {
             sys.puts(JSON.stringify(results));
           }
-      }
-   );
+       }
+    );
