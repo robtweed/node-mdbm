@@ -1,8 +1,8 @@
 <h2>mdbMumpsClient.js</h2>
-
+ 
 node.js client for M/DB:Mumps (HTTP-enabled GT.M or Cache instance)
 
-Based on a modification of node-apac by Dustin McQuay (dmcquay)
+Based on a modification of node-apac (Dustin McQuay [dmcquay])
 
 29 September 2010, M/Gateway Developments Ltd
 
