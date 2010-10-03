@@ -9,8 +9,8 @@
 , "bugs" : { "web" : "http://github.com/robtweed/node-mdbm/issues" }
 , "os" : [ "linux", "darwin" ]
 , "directories" : { "lib" : "./lib/" }
-, "main" : "./node-mdbm"
+, "main" : "./lib/mdbMumpsClient"
 , "engines" : { "node" : ">=0.2.2" }
-, "dependencies" : {},
+, "dependencies" : {}
 , "licenses": [ "MIT" ]
 }
