@@ -1,0 +1,16 @@
+{ "name" : "mdbm"
+, "description" : "Mumps (M/DB:Mumps) Client for Node"
+, "version" : "0.0.1"
+, "author" : "Rob Tweed <rtweed@mgateway.com>"
+, "repository" :
+  { "type" : "git"
+  , "url" : "git://github.com/robtweed/node-mdbm.git"
+  }
+, "bugs" : { "web" : "http://github.com/robtweed/node-mdbm/issues" }
+, "os" : [ "linux", "darwin" ]
+, "directories" : { "lib" : "./lib/" }
+, "main" : "./node-mdbm"
+, "engines" : { "node" : ">=0.2.2" }
+, "dependencies" : {},
+, "licenses": [ "MIT" ]
+}
