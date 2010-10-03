@@ -49,7 +49,6 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
       mdbSecret:'xxxxxxxx',
       endPoint: '127.0.0.1'
    });
-   
    mdbm.execute('Set', 'mdbmTest', {
          Subscripts:["check","this","out"],
          DataValue:"Too cool!"
@@ -64,7 +63,6 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
              }
       }
    );
-   
    mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
       function(error, results) {
              if (error) {
@@ -77,13 +75,10 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
       }
    );
 
-
 Note: this global node could also have been created using SetJSON:
 
-
    var json = {"check":{"this":{"out":"Too cool!"}}};
-   
-    mdbm.execute('SetJSON', 'mdbmTest', json,
+   mdbm.execute('SetJSON', 'mdbmTest', json,
       function(error, results) {
              if (error) { 
                 sys.print('Error: ' + error + "\n");
@@ -93,10 +88,9 @@ Note: this global node could also have been created using SetJSON:
                sys.puts(results.ok);
              }
       }
-    );
+   );
  
 and the original JSON could be retrieved using:
-
 
    mdbm.execute('GetJSON', 'mdbmTest','',
       function(error, results) {
@@ -109,5 +103,3 @@ and the original JSON could be retrieved using:
           }
       }
    );
-
-
