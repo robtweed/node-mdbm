@@ -1,4 +1,4 @@
-mdbMumpsClient.js
+<h2>mdbMumpsClient.js</h2>
 
 node.js client for M/DB:Mumps (HTTP-enabled GT.M or Cache instance)
 
@@ -34,13 +34,14 @@ eg
 
 To set the global:  
 
+<code>
    ^mdbmTest("check","this","out")="Too cool!"
-
+</code>
+   
 and then retrieve the value again (note the asynchronous nature of node.js will 
 not guarantee the order in which the APIs below are executed in the Mumps back-end)
 
-****************************
-
+<code>
 var sys = require("sys");
 var mdbmif = require("./mdbMumpsClient");
 
@@ -76,11 +77,11 @@ mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
           }
    }
 );
-
-*************************
+</code>
 
 Note: this global node could also have been created using SetJSON:
 
+<code>
  var json = {"check":{"this":{"out":"Too cool!"}}};
 
  mdbm.execute('SetJSON', 'mdbmTest', json,
@@ -94,9 +95,11 @@ Note: this global node could also have been created using SetJSON:
           }
    }
  );
-
+</code>
+ 
 and the original JSON could be retrieved using:
 
+<code>
 mdbm.execute('GetJSON', 'mdbmTest','',
    function(error, results) {
           if (error) { 
@@ -108,5 +111,5 @@ mdbm.execute('GetJSON', 'mdbmTest','',
           }
    }
 );
-
+</code>
 
