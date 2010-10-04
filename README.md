@@ -35,31 +35,31 @@ The M/DB system should now be ready to use.  You'll now need to install Node.js,
 
 - Install node.js:
 
-    sudo apt-get install g++ curl openssl libssl-dev apache2-utils
-    sudo apt-get install git-core
-    cd /
-    sudo mkdir git
-    cd git
-    git clone git://github.com/ry/node.git
-    cd node
-    ./configure
-    make
-    sudo make install
+       sudo apt-get install g++ curl openssl libssl-dev apache2-utils
+       sudo apt-get install git-core
+       cd /
+       sudo mkdir git
+       cd git
+       git clone git://github.com/ry/node.git
+       cd node
+       ./configure
+       make
+       sudo make install
 
   Test it by running: node -v
   
 - Install npm (Node.js package manager)
 
-    sudo chown -R $USER /usr/local
-    curl http://npmjs.org/install.sh | sh
+       sudo chown -R $USER /usr/local
+       curl http://npmjs.org/install.sh | sh
 
 - Install node-mdbm:
 
-    npm install node-mdbm
+       npm install node-mdbm
 
 - Update M/DB and M/DB:Mumps
 
-    git clone git://github.com/robtweed/mdb.git
+       git clone git://github.com/robtweed/mdb.git
     
   Then copy the files MDB.m and MDBMumps.m from /usr/git/mdb to /usr/local/gtm/ewd, overwriting the existing versions.
 	
