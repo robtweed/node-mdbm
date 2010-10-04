@@ -16,14 +16,14 @@ This is released as Open Source without restriction
 
 In order to use node-mdbm you'll need to have a Linux system with the GT.M (Mumps) database installed and also:
 
-- M/DB (latest version from the repository: robtweed/mdb)
-- M/DB:Mumps (latest version from the repository: robtweed/mdb)
-- Apache and our m_apache gateway.
+- M/DB (latest version from the repository: *robtweed/mdb*)
+- M/DB:Mumps (latest version from the repository: *robtweed/mdb*)
+- Apache and our *m_apache* gateway.
 
-For more information on GT.M, see http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm
+For more information on GT.M, see [http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm](http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm)
 
 
-In fact, the easiest way to get a test system going is to use Mike Clayton's M/DB installer which will create you a fully-working Mumps environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install node.js and node-mdbm.
+In fact, the easiest way to get a test system going is to use Mike Clayton's M/DB installer which will create you a fully-working Mumps environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install Node.js and node-mdbm.
 
 For example, to create an M/DB Appliance using Amazon EC2:
 
