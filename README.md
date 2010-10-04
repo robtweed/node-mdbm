@@ -123,14 +123,15 @@ With the exception of *version*, the APIs follow the same pattern:
 
     Returns the current build number and date in the results object:
 	
-	results.Build = build number
-	results.Date = build date
+	    results.Build = build number  
+	    results.Date = build date
+	
 	
 - mdbm.set(globalName, subscripts, value, function(error, results) {});
 	
 	Sets a global node:
 	
-	globalName = name of Mumps global (literal)
+	globalName = name of Mumps global (literal)  
 	subscripts = array specifying the subscripts ('' if value to be set at top of global)
 	    eg ["a","b","c"]
 	value = the data value to be set at the specified global node
@@ -143,7 +144,7 @@ With the exception of *version*, the APIs follow the same pattern:
 
 	Gets the value for a global node:
 	
-	globalName = name of Mumps global (literal)
+	globalName = name of Mumps global (literal)  
 	subscripts = optional array specifying the subscripts ('' if value at top of global to be returned)
 	    eg ["a","b","c"]
 	
@@ -161,7 +162,7 @@ With the exception of *version*, the APIs follow the same pattern:
 
     Maps the specified JSON object and saves it into a Mumps global node.  The JSON object can be saved into the top node of a Mumps global, or merged under a specified subscript level within a Mumps global.  Optionally you can clear down any existing data at the specified global node.  The default is the new JSON object gets merged with existing data in the global.
 	
-	globalName = name of Mumps global (literal)
+	globalName = name of Mumps global (literal)  
 	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
 	    eg ["a","b","c"]
 	json = the JSON object to be saved (object literal)
@@ -191,7 +192,7 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
        mdbSecret:'<your secret key>',
        endPoint: '127.0.0.1'
     });
-    mdbm.set('mdbmTest', {Subscripts:["check","this","out"],DataValue:"Too cool!"},
+    mdbm.set('mdbmTest', ["check","this","out"], "Too cool!",
        function(error, results) {
              if (error) { 
                 sys.print('Error: ' + error + "\n");
@@ -217,7 +218,7 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
 Note: this global node could also have been created using SetJSON:
 
     var json = {"check":{"this":{"out":"Too cool!"}}};
-    mdbm.setJSON('mdbmTest', json,
+    mdbm.setJSON('mdbmTest', '', json, true,
        function(error, results) {
              if (error) { 
                 sys.print('Error: ' + error + "\n");
