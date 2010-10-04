@@ -109,8 +109,8 @@ If this is what you get, then you have Node.js successfully communicating with y
 - getJSON   (returns a JSON object from Mumps global storage)
 - kill      (deletes a global node, using the specified subscripts)
 - getNextSubscript     (returns the next subscript at a specified level of global subscripting)
-- getAllSubscripts  (returns an array containing all subscript values for a specified level of subscripting)
 - getPreviousSubscript     (returns the next subscript at a specified level of global subscripting)
+- getAllSubscripts  (returns an array containing all subscript values below a specified level of subscripting)
 - increment (Atomically increments a global node, using the specified subscripts)
 - decrement (Atomically decrements a global node, using the specified subscripts)
 - version   (returns the M/DB:Mumps build number and date)
@@ -165,13 +165,113 @@ With the exception of *version*, the APIs follow the same pattern:
 	globalName = name of Mumps global (literal)  
 	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
 	    eg ["a","b","c"]
-	json = the JSON object to be saved (object literal)
+	json = the JSON object to be saved (object literal)  
 	deleteBeforeSave = true|false (default = false)
 	
 	Returns ok=true if successful, ie:
 	
        results.ok = true
 	   
+- mdbm.getJSON(globalName, subscripts, function(error, results) {});
+
+    Gets the data stored at and under the specified global node, and maps it to a JSON object before returning it.
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
+	    eg ["a","b","c"]
+
+	
+	Returns the JSON object as results
+	
+       results = returned JSON object
+	   
+- mdbm.kill(globalName, subscripts, function(error, results) {});
+	
+	Deletes a global node and the sub-tree below it:
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the subscripts ('' if the entire global is to be deleted)
+	    eg ["a","b","c"]
+	
+	Returns ok=true if successful, ie:
+	
+       results.ok = true
+	
+- mdbm.getNextSubscript(globalName, subscripts, function(error, results) {});
+	
+	Gets the next subscript value (if any) in collating sequence at the specified level of subscripting, following the last specified subscript:
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the subscripts ('' if the first 1st subscript is to be returned)
+	    eg ["a","b","c"]  will return the value of the 3rd subscript the follows the value "c" where subscript1 = "a" and subscript2 = "b"
+	
+	Returns:
+	
+	    results.subscriptValue = the value of the next subscript
+		results.dataStatus = the data status at the next subscript:
+					10 = no data at the next subscripted node but child subscripts exist
+					11 = data at the next subscripted node, and child subscripts exist
+					1  = data at the next subscripted node, but no child subscripts exist
+		results.dataValue = the value (if any) at the next subscript
+
+- mdbm.getPreviousSubscript(globalName, subscripts, function(error, results) {});
+	
+	Gets the previous subscript value (if any) in collating sequence at the specified level of subscripting, preceding the last specified subscript:
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the subscripts ('' if the last 1st subscript is to be returned)
+	    eg ["a","b","c"]  will return the value of the 3rd subscript the precedes the value "c" where subscript1 = "a" and subscript2 = "b"
+	
+	Returns:
+	
+	    results.subscriptValue = the value of the previous subscript
+		results.dataStatus = the data status at the previous subscript:
+					10 = no data at the previous subscripted node but child subscripts exist
+					11 = data at the previous subscripted node, and child subscripts exist
+					1  = data at the previous subscripted node, but no child subscripts exist
+		results.dataValue = the value (if any) at the previous subscript
+
+- mdbm.getAllSubscripts(globalName, subscripts, function(error, results) {});
+	
+	Gets all the values of the subscripts that exist below the specified subscript(s):
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the required subscripts ('' if all 1st subscript values are to be returned)
+	    eg ["a","b","c"]  will return an array of all subscripts that exist below this level of subscripting
+		
+	
+	Returns:
+	
+	    results = array of all subscripts found immediately below the specified global node.
+
+- mdbm.increment(globalName, subscripts, delta, function(error, results) {});
+	
+	Atomically increments the speficied global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the required subscripts ('' if the top-level global node is to be incremented)
+	    eg ["a","b","c"] 
+	delta: the amount by which the specified global node is to be incremented (default = 1)	
+	
+	Returns:
+	
+	    results.value = the new value of the incremented node
+
+- mdbm.decrement(globalName, subscripts, delta, function(error, results) {});
+	
+	Atomically decrements the speficied global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
+	
+	globalName = name of Mumps global (literal)  
+	subscripts = array specifying the required subscripts ('' if the top-level global node is to be decremented)
+	    eg ["a","b","c"] 
+	delta: the amount by which the specified global node is to be decremented (default = 1)	
+	
+	Returns:
+	
+	    results.value = the new value of the decremented node
+
+		
+		
 ## Examples
 
 To set the global:  
