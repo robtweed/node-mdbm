@@ -16,8 +16,8 @@ This is released as Open Source without restriction
 
 In order to use node-mdbm you'll need to have a Linux system with the GT.M (Mumps) database installed and also:
 
-- M/DB (latest version)
-- M/DB:Mumps (latest version)
+- M/DB (latest version from the repository: robtweed/mdb)
+- M/DB:Mumps (latest version from the repository: robtweed/mdb)
 - Apache and our m_apache gateway.
 
 For more information on GT.M, see http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm
@@ -27,7 +27,8 @@ In fact, the easiest way to get a test system going is to use Mike Clayton's M/D
 
 For example, to create an M/DB Appliance using Amazon EC2:
 
-- Start up a Ubuntu Lucid (10.04) instance, eg use ami-6c06f305 and, to keep costs down, select a t1.micro instance -  Follow the instructions for installing the M/DB Appliance at http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload
+- Start up a Ubuntu Lucid (10.04) instance, eg use ami-6c06f305 and, to keep costs down, select a t1.micro instance
+- Follow the instructions for installing the M/DB Appliance at [http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload](http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload)
 
 If you point a browser at the domain name/IP address assigned to the Ubuntu machine, you should now get the M/DB welcome screen.  You'll need to initialise M/DB before you can use node-mdbm.  Follow the instructions that you'll see in your browser.
 
@@ -76,7 +77,7 @@ You should now be ready to try out node-mdbm!
        mdbSecret:'<your secret key>',
        endPoint: '127.0.0.1'
     });
-    mdbm.getVersion( 
+    mdbm.version( 
        function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
