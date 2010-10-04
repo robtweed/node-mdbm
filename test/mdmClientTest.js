@@ -7,7 +7,7 @@ var mdbm = new mdbmClient.OperationHelper({
    endPoint: '127.0.0.1'
 });
 
-mdbm.execute('GetVersion', '', '', 
+mdbm.version( 
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -19,7 +19,9 @@ mdbm.execute('GetVersion', '', '',
    }
 );
 
-mdbm.execute('Set', '', {GlobalName: "mdbmTest",Subscripts:["check","","out"],DataValue:"Too cool!"},
+
+// This will return an error because subscripts cannot be null
+mdbm.set("mdbmTest", ["check","","out"], "Too cool!",
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -31,10 +33,7 @@ mdbm.execute('Set', '', {GlobalName: "mdbmTest",Subscripts:["check","","out"],Da
    }
 );
 
-mdbm.execute('Set', 'mdbmTest', {
-      Subscripts:["check","this","out"],
-      DataValue:"Too cool!"
-   },
+mdbm.set('mdbmTest', ["check","this","out"], "Too cool!",
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -46,7 +45,7 @@ mdbm.execute('Set', 'mdbmTest', {
    }
 );
 
-mdbm.execute('SetJSON', 'mdbmTest2', {check:{this:{out:"Too cool!"}}},
+mdbm.setJSON('mdbmTest2', {check:{this:{out:"Too cool!"}}}, true,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -58,9 +57,8 @@ mdbm.execute('SetJSON', 'mdbmTest2', {check:{this:{out:"Too cool!"}}},
    }
 );
 
-mdbm.execute('SetJSON','mdbmTest3', 
- {'a':111,'b':'hello','arr':['hhjg','lkjklj','uyi'],'arr2':[{'l':'hello','k':'ssss'},{'l':'there','k':'again'}],'d':{'q':'qqqq','r':{'z':123,'x':222},'w':'wwwwww','e':'eeeee'},'c':'xxxxx'}, 
-  
+mdbm.setJSON('mdbmTest3', 
+ {'a':111,'b':'hello','arr':['hhjg','lkjklj','uyi'],'arr2':[{'l':'hello','k':'ssss'},{'l':'there','k':'again'}],'d':{'q':'qqqq','r':{'z':123,'x':222},'w':'wwwwww','e':'eeeee'},'c':'xxxxx'}, true,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -72,7 +70,7 @@ mdbm.execute('SetJSON','mdbmTest3',
    }
 );
 
-mdbm.execute('SetJSON', 'mdbmTest4', ["this","is","cool"],
+mdbm.setJSON('mdbmTest4', ["this","is","cool"], true,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -84,14 +82,3 @@ mdbm.execute('SetJSON', 'mdbmTest4', ["this","is","cool"],
    }
 );
 
-mdbm.execute('GetVersion', '', '',
-   function(error, results) {
-          if (error) { 
-             sys.print('Error: ' + error + "\n");
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
-          }
-          else {
-            sys.puts(results.Name + "\n" + results.Build + "\n" + results.Date + "\n");
-          }
-   }
-);

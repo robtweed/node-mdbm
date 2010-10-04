@@ -97,7 +97,7 @@ Now run it.  If everything is working properly, you should see:
     ubuntu@domU-12-31-39-09-B8-03:/usr/local/gtm/ewd$ node test1.js
     M/DB:Mumps
     5
-    01 October 2010
+    04 October 2010
 
 If this is what you get, then you have Node.js successfully communicating with your GT.M Mumps database.
 	

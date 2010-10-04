@@ -7,8 +7,8 @@ var mdbm = new mdbmif.Client({
    endPoint: '127.0.0.1'
 });
 
-/*
-mdbm.execute('SetJSON', {Reference:'mdbmTest4'}, ["this","is","cool"],
+
+mdbm.setJSON('mdbmTest4', ["this","is","cool"], false, 
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -19,13 +19,10 @@ mdbm.execute('SetJSON', {Reference:'mdbmTest4'}, ["this","is","cool"],
           }
    }
 );
-*/
 
-/*
-mdbm.execute('Set', 'mdbmTest', {
-      Subscripts:["check","this","out"],
-      DataValue:"Too cool!"
-   },
+
+
+mdbm.set('Set', 'mdbmTest', ["check","this","out"], "Too cool!",
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -37,24 +34,9 @@ mdbm.execute('Set', 'mdbmTest', {
    }
 );
 
-*/
 
-/*
-mdbm.execute('Kill', 'mdbmTest4', {Subscripts:["2"]},
-   function(error, results) {
-          if (error) { 
-             sys.print('Error: ' + error + "\n");
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
-          }
-          else {
-            sys.puts(results.ok + "\n");
-          }
-   }
-);
-*/
 
-/*
-mdbm.execute('Kill', 'mdbmTest4', [2],
+mdbm.kill('mdbmTest4', ["2"],
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -65,9 +47,10 @@ mdbm.execute('Kill', 'mdbmTest4', [2],
           }
    }
 );
-*/
-/*
-mdbm.execute('Kill', 'mdbmTest4', '',
+
+
+
+mdbm.kill('mdbmTest4', [2],
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -78,9 +61,22 @@ mdbm.execute('Kill', 'mdbmTest4', '',
           }
    }
 );
-*/
-/*
-mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
+
+// Kills the entire ^mdbmTest4 global
+mdbm.kill('mdbmTest4', '',
+   function(error, results) {
+          if (error) { 
+             sys.print('Error: ' + error + "\n");
+             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
+          }
+          else {
+            sys.puts(results.ok + "\n");
+          }
+   }
+);
+
+
+mdbm.get('mdbmTest', ["check","this","out"],
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -91,14 +87,14 @@ mdbm.execute('Get', 'mdbmTest', ["check","this","out"],
           }
    }
 );
-*/
+
 
 function xset(i) {
 
 var json = "{\"" + i + "\":" + i + "}";
 json = JSON.parse(json);
 
- mdbm.execute('SetJSON', 'mdbmTest5', json,
+ mdbm.setJSON('mdbmTest5', json, true,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -113,15 +109,16 @@ json = JSON.parse(json);
 
 /*
 sys.puts("starting loop");
-for (i=1;i<150;i++) {
+for (i=1;i<20;i++) {
   xset(i);
   sys.puts("set " + i);
 };
 */
-/*
-mdbm.execute('SetJSON','mdbmTest3', 
+
+
+mdbm.setJSON('mdbmTest3', 
  {'a':111,'b':'hello','arr':['hhjg','lkjklj','uyi'],'arr2':[{'l':'hello','k':'ssss'},{'l':'there','k':'again'}],'d':{'q':'qqqq','r':{'z':123,'x':222},'w':'wwwwww','e':'eeeee'},'c':'xxxxx'}, 
-  
+   true,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -132,10 +129,10 @@ mdbm.execute('SetJSON','mdbmTest3',
           }
    }
 );
-*/
 
-/*
-mdbm.execute('GetJSON', 'mdbmTest3','',
+
+
+mdbm.getJSON('mdbmTest3','',
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -146,9 +143,9 @@ mdbm.execute('GetJSON', 'mdbmTest3','',
           }
    }
 );
-*/
-/*
-mdbm.execute('Order', 'mdbmTest3', ["arr2",2,"k"],
+
+
+mdbm.getNextSubscript('mdbmTest3', ["arr2",2,"k"],
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
@@ -159,9 +156,9 @@ mdbm.execute('Order', 'mdbmTest3', ["arr2",2,"k"],
           }
    }
 );
-*/
-/*
-mdbm.execute('Order', {GlobalName:"mdbmTest",Direction:"backwards"}, ["check","this","out"],
+
+
+mdbm.getPreviousSubscript("mdbmTest", ["check","this","out"],
    function(error, results) {
           if (error) { 
              sys.puts('Error: ' + error + "\n");
@@ -172,10 +169,10 @@ mdbm.execute('Order', {GlobalName:"mdbmTest",Direction:"backwards"}, ["check","t
           }
    }
 );
-*/
 
 
-mdbm.execute('OrderAll', 'mdbmTest3', ["a"],
+
+mdbm.getAllSubscripts('mdbmTest3', ["a"],
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
