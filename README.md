@@ -12,27 +12,36 @@ This is released as Open Source without restriction
 
     npm install node-mdbm
 	
+##  Mumps?
+
+Mumps is a sadly neglected, but extremely versatile, high-performance NoSQL database.  It stores data in sparse hierarchical array-like structures known as "globals".  These are extremely flexible: unlike other NoSQL databases that are designed with one particular storage model in mind, the Mumps database is more like a "Swiss Army Knife of databases".  You can use a Mumps database to store simple key/value pairs, tabular data (cf BigTable, SimpleDB, Cassandra), documents (cf CouchDB, MongoDB) or more complex data such as graphs or DOMs.  Mumps databases use sophisticated mechanisms for automatically ensuring that the data you require most frequently is cached in memory: you get in-memory key/value store performance with the security and integrity of an on-disk database.
+
+GT.M is one such implementation of the Mumps database that is available as a Free Open Source version.  For more information on GT.M, see [http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm](http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm)
+
+I've developed *node-mbdm* to make it possible for the growing Node.js community to benefit from this amazing database technology. The combination of Node.js and Mumps is truly remarkable!
+
+OK, enough of the hyperbole! :-)
+
 ##  Installing the Mumps back-end System
 
-In order to use node-mdbm you'll need to have a Linux system with the GT.M (Mumps) database installed and also:
+In order to use node-mdbm you'll need to have a Linux system with GT.M installed and also:
 
 - M/DB (latest version from the repository: *robtweed/mdb*)
 - M/DB:Mumps (latest version from the repository: *robtweed/mdb*)
 - Apache and our *m_apache* gateway.
 
-For more information on GT.M, see [http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm](http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm)
+Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install Node.js and node-mdbm, all of which I've described below.
 
+You can use apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.
 
-In fact, the easiest way to get a test system going is to use Mike Clayton's M/DB installer which will create you a fully-working Mumps environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install Node.js and node-mdbm.
-
-For example, to create an M/DB Appliance using Amazon EC2:
+So, for example, to create an M/DB Appliance using Amazon EC2:
 
 - Start up a Ubuntu Lucid (10.04) instance, eg use ami-6c06f305 and, to keep costs down, select a t1.micro instance
-- Follow the instructions for installing the M/DB Appliance at [http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload](http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload)
+- Now follow the instructions for installing the M/DB Appliance at [http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload](http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload)
 
 If you point a browser at the domain name/IP address assigned to the Ubuntu machine, you should now get the M/DB welcome screen.  You'll need to initialise M/DB before you can use node-mdbm.  Follow the instructions that you'll see in your browser.
 
-The M/DB system should now be ready to use.  You'll now need to install Node.js, node-mdbm and upgrade two Mumps routines (MDB.m and MDBMumps.m) as follows:
+The M/DB system should now be working.  You'll now need to install Node.js, node-mdbm and upgrade two Mumps routines (MDB.m and MDBMumps.m) as follows:
 
 - Install node.js:
 
