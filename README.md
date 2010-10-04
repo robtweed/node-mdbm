@@ -60,15 +60,16 @@ The M/DB system should now be ready to use.  You'll now need to install Node.js,
 
 - Update M/DB and M/DB:Mumps
 
-       git clone git://github.com/robtweed/mdb.git
+       cd /git
+	   git clone git://github.com/robtweed/mdb.git
     
-  Then copy the files MDB.m and MDBMumps.m from /usr/git/mdb to /usr/local/gtm/ewd, overwriting the existing versions.
+  Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
 	
 You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
 
-  In /usr/local/gtm/ewd create a file named test1.js containing:
+  In */usr/local/gtm/ewd* create a file named *test1.js* containing:
   
     var sys = require("sys");
     var mdbmif = require("node-mdbm");
@@ -89,7 +90,7 @@ You should now be ready to try out node-mdbm!
        }
     );
 	
-Replace the mdbId and mdbSecret values with the ones you used to initialise the M/DB Appliance
+Replace the *mdbId* and *mdbSecret* values with the ones you used to initialise the M/DB Appliance
 	
 Now run it.  If everything is working properly, you should see:
 
@@ -98,6 +99,8 @@ Now run it.  If everything is working properly, you should see:
     5
     01 October 2010
 
+If this is what you get, then you have Node.js successfully communicating with your GT.M Mumps database.
+	
 ## APIs
 
 - set       (sets a global, using the specified subscripts and data value)
@@ -105,12 +108,69 @@ Now run it.  If everything is working properly, you should see:
 - setJSON   (maps a JSON object to a Mumps global)
 - getJSON   (returns a JSON object from Mumps global storage)
 - kill      (deletes a global node, using the specified subscripts)
-- order     (returns the next subscript at a specified level of global subscripting)
-- orderAll  (returns an array containing all subscript values for a specified level of subscripting)
+- getNextSubscript     (returns the next subscript at a specified level of global subscripting)
+- getAllSubscripts  (returns an array containing all subscript values for a specified level of subscripting)
+- getPreviousSubscript     (returns the next subscript at a specified level of global subscripting)
 - increment (Atomically increments a global node, using the specified subscripts)
 - decrement (Atomically decrements a global node, using the specified subscripts)
 - version   (returns the M/DB:Mumps build number and date)
 
+With the exception of *version*, the APIs follow the same pattern:
+
+## Commands
+
+- mdbm.version(function(error, results) {});
+
+    Returns the current build number and date in the results object:
+	
+	results.Build = build number
+	results.Date = build date
+	
+- mdbm.set(globalName, subscripts, value, function(error, results) {});
+	
+	Sets a global node:
+	
+	globalName = name of Mumps global (literal)
+	subscripts = array specifying the subscripts ('' if value to be set at top of global)
+	    eg ["a","b","c"]
+	value = the data value to be set at the specified global node
+	
+	Returns ok=true if successful, ie:
+	
+       results.ok = true
+
+- mdbm.get(globalName, subscripts, function(error, results) {});
+
+	Gets the value for a global node:
+	
+	globalName = name of Mumps global (literal)
+	subscripts = optional array specifying the subscripts ('' if value at top of global to be returned)
+	    eg ["a","b","c"]
+	
+	Returns the value (if any) and the status of the specified node
+	
+       results.value
+	   results.dataStatus
+	   
+	   If the specified node does not exist, results.dataStatus = 0 and results.value = ''
+	   If the specified node exists, has lower-level subscripts but no data value, results.dataStatus = 10 and results.value = ''
+	   If the specified node exists, has lower-level subscripts has a data value, results.dataStatus = 11 and results.value = the value of the node
+	   If the specified node exists, has no lower-level subscripts and has a data value, results.dataStatus = 1 and results.value = the value of the node
+	   
+- mdbm.setJSON(globalName, subscripts, json, deleteBeforeSave, function(error, results) {});
+
+    Maps the specified JSON object and saves it into a Mumps global node.  The JSON object can be saved into the top node of a Mumps global, or merged under a specified subscript level within a Mumps global.  Optionally you can clear down any existing data at the specified global node.  The default is the new JSON object gets merged with existing data in the global.
+	
+	globalName = name of Mumps global (literal)
+	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
+	    eg ["a","b","c"]
+	json = the JSON object to be saved (object literal)
+	deleteBeforeSave = true|false (default = false)
+	
+	Returns ok=true if successful, ie:
+	
+       results.ok = true
+	   
 ## Examples
 
 To set the global:  
