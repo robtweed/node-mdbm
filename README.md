@@ -6,7 +6,6 @@ Inspired by node-apac (thanks to Dustin McQuay [dmcquay])
 
 29 September 2010, M/Gateway Developments Ltd
 
-This is released as Open Source without restriction
 
 ## Installing node-mdbm
 
