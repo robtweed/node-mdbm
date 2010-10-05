@@ -57,10 +57,15 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
        make
        sudo make install
 
-  Test it by running: node -v
+  Test it by running *node -v*.  If everything is installed and working correctly you'll see:
+  
+     $ *node -v*
+     v0.3.0-pre
+
   
 - Install npm (Node.js package manager)
 
+       cd /git
        sudo chown -R $USER /usr/local
        curl http://npmjs.org/install.sh | sh
 
@@ -102,9 +107,9 @@ You should now be ready to try out node-mdbm!
 	
 Replace the *mdbId* and *mdbSecret* values with the ones you used to initialise the M/DB Appliance
 	
-Now run it.  If everything is working properly, you should see:
+Now run it (from within */usr/local/gtm/ewd*).  If everything is working properly, you should see:
 
-    ubuntu@domU-12-31-39-09-B8-03:/usr/local/gtm/ewd$ node test1.js
+    ubuntu@domU-12-31-39-09-B8-03:/usr/local/gtm/ewd$ *node test1.js*
     M/DB:Mumps
     5
     04 October 2010
