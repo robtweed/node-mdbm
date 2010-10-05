@@ -39,6 +39,7 @@ In order to use node-mdbm you'll need to have a Linux system with GT.M installed
 
 - M/DB (latest version from the repository: *robtweed/mdb*)
 - M/DB:Mumps (latest version from the repository: *robtweed/mdb*)
+- EWD (latest version from the respository: *robtweed/EWD*)
 - Apache and our *m_apache* gateway.
 
 Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install Node.js and node-mdbm, all of which I've described below.
