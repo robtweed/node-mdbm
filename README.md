@@ -42,7 +42,9 @@ In order to use node-mdbm you'll need to have a Linux system with GT.M installed
 - EWD (latest version from the respository: *robtweed/EWD*)
 - Apache and our *m_apache* gateway.
 
-Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB and M/DB:Mumps and install Node.js and node-mdbm, all of which I've described below.
+Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB, M/DB:Mumps and EWD and you'll have a Mumps server that's ready for use with Node.js and node-mdbm.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.
+
+The instructions below assume you'll be installing Node.js and node-mdbm on the same server.
 
 You can use apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.
 
@@ -53,9 +55,9 @@ So, for example, to create an M/DB Appliance using Amazon EC2:
 
 If you point a browser at the domain name/IP address assigned to the Ubuntu machine, you should now get the M/DB welcome screen.  **You'll need to initialise M/DB before you can use node-mdbm**.  Follow the instructions that you'll see in your browser for creating the */usr/MDB/MDB.conf* file and initialising M/DB.
 
-The M/DB system should now be working.  You'll now need to install Node.js, node-mdbm and upgrade two Mumps routines (MDB.m and MDBMumps.m) as follows:
+The M/DB system should now be working.  In order to enable it for use with Node.js and node-mdbm, you'll need to upgrade MDB.m, MDBMumps.m and EWD as follows:
 
-- Install node.js:
+- Install git - we'll be needing this to fetch the various resources we need:
 
        sudo apt-get install g++ curl openssl libssl-dev apache2-utils
        sudo apt-get install git-core
@@ -63,6 +65,29 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
        sudo mkdir git
 	   sudo chmod 777 git
        cd git
+
+- Update M/DB and M/DB:Mumps
+
+	   git clone git://github.com/robtweed/mdb.git
+    
+  Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
+
+	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
+
+- Update EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
+
+	   git clone git://github.com/robtweed/EWD.git
+    
+  Then copy the routine files from */usr/git/EWD* to */usr/local/gtm/ewd*, overwriting the original versions.
+
+	    cp /git/EWD/*.m /usr/local/gtm/ewd
+	   
+At this point you have a GT.M-based Mumps server that is ready to access from a Node.js system via HTTP.
+
+If you want to make a completely self-contained test system that also includes Node.js and node-mdbm, then continue as follows:
+	      
+- Install node.js:
+
        git clone git://github.com/ry/node.git
        cd node
        ./configure
@@ -94,23 +119,6 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
 	    cp /git/node-mdbm/lib/mdbMumpsClient.js ~/.node_libraries
 
 
-- Update M/DB and M/DB:Mumps
-
-	   git clone git://github.com/robtweed/mdb.git
-    
-  Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
-
-	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
-
-
-- Update EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
-
-	   git clone git://github.com/robtweed/EWD.git
-    
-  Then copy the routine files from */usr/git/EWD* to */usr/local/gtm/ewd*, overwriting the original versions.
-
-	    cp /git/EWD/*.m /usr/local/gtm/ewd
-		
 OK! That's it all installed. You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
