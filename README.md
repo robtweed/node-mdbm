@@ -63,15 +63,24 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
         v0.3.0-pre
 
   
-- Install npm (Node.js package manager)
+- Install node-mdbm
 
+    I wanted to use the Node Package Manager (npm) but I've so far been unable to make this work.  In the meantime, you can very easily manually install node-mdbm as follows:
+	
+	First create the *~/.node_libraries* directory:
+
+        cd ~
+		mkdir .node_libraries
+	
+	Now download node-mdbm from GitHub:
+	
        cd /git
-       sudo chown -R $USER /usr/local
-       curl http://npmjs.org/install.sh | sh
+	   git clone git://github.com/robtweed/node-mdbm.git
+	
+    Then just copy */git/node-mdbm/lib/mdbMumpsClient.js* to your *~/.node_libraries* directory:
+	
+	    cp /git/node-mdbm/lib/mdbMumpsClient.js ~/.node_libraries
 
-- Install node-mdbm:
-
-       npm install node-mdbm
 
 - Update M/DB and M/DB:Mumps
 
@@ -79,8 +88,11 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
 	   git clone git://github.com/robtweed/mdb.git
     
   Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
-	
-You should now be ready to try out node-mdbm!
+
+	    cp /git/mdb/lib/MDB*.m /usr/local/gtm/ewd
+
+  
+OK! That's it all installed. You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
 
