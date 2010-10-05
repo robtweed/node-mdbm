@@ -89,7 +89,7 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
     
   Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
 
-	    cp /git/mdb/lib/MDB*.m /usr/local/gtm/ewd
+	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
 
   
 OK! That's it all installed. You should now be ready to try out node-mdbm!
@@ -99,7 +99,7 @@ OK! That's it all installed. You should now be ready to try out node-mdbm!
   In */usr/local/gtm/ewd* create a file named *test1.js* containing:
   
     var sys = require("sys");
-    var mdbmif = require("node-mdbm");
+    var mdbmif = require("mdbMumpsClient");
     var mdbm = new mdbmif.Client({
        mdbId:'<yourId>',
        mdbSecret:'<your secret key>',
@@ -117,7 +117,7 @@ OK! That's it all installed. You should now be ready to try out node-mdbm!
        }
     );
 	
-Replace the *mdbId* and *mdbSecret* values with the ones you used to initialise the M/DB Appliance
+**Replace the *mdbId* and *mdbSecret* values with the ones you used in the MDB.conf file that initialised the M/DB Appliance**
 	
 Now run it (from within */usr/local/gtm/ewd*).  If everything is working properly, you should see:
 
@@ -128,6 +128,25 @@ Now run it (from within */usr/local/gtm/ewd*).  If everything is working properl
 
 If this is what you get, then you have Node.js successfully communicating with your GT.M Mumps database.
 	
+## Running node-mdbm
+
+To use node-mdbm in your Node.js applications, you must add:
+
+        var mdbmif = require("mdbMumpsClient");
+		
+Then create a new instance of the node-mdbm client object:
+
+      var mdbm = new mdbmif.Client({
+         mdbId:'<yourId>',
+         mdbSecret:'<your secret key>',
+         endPoint: '127.0.0.1'
+      });
+	
+You must specify a valid M/DB User ID and Secret Key.  Use the values you put in the MDB.conf file when you initialised M/DB.  (*Normally the endPoint should be 127.0.0.1, but you can access a remote GT.M system from Node.js by specifying its IP Address or Domain Name.  Note that in order to access a remote GT.M system using node-mdbm you must install M/DB and M/DB:Mumps on the GT.M system*)
+	
+Now you can use any of the node-mdbm APIs.
+
+
 ## APIs
 
 - set       (sets a global, using the specified subscripts and data value)
@@ -312,7 +331,7 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
 
 
     var sys = require("sys");
-    var mdbmif = require("./mdbMumpsClient");
+    var mdbmif = require("mdbMumpsClient");
     
     var mdbm = new mdbmif.Client({
        mdbId:'<your Id>',

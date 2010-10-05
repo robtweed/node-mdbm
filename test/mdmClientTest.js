@@ -1,5 +1,5 @@
 var sys = require("sys");
-var mdbmif = require("./mdbMumpsClient");
+var mdbmif = require("mdbMumpsClient");
 
 // change endPoint to a different IP address/domain name if GT.M is running on a different server to Node.js
 
