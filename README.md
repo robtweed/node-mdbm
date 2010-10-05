@@ -95,14 +95,21 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
 
 - Update M/DB and M/DB:Mumps
 
-       cd /git
 	   git clone git://github.com/robtweed/mdb.git
     
   Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
 
 	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
 
-  
+
+- Update EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
+
+	   git clone git://github.com/robtweed/EWD.git
+    
+  Then copy the routine files from */usr/git/EWD* to */usr/local/gtm/ewd*, overwriting the original versions.
+
+	    cp /git/EWD/*.m /usr/local/gtm/ewd
+		
 OK! That's it all installed. You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
