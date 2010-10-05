@@ -12,7 +12,7 @@ This is released as Open Source without restriction
 
 I wanted to use the Node Package Manager (npm) but I've so far been unable to make this work.  In the meantime, you can very easily manually install *node-mdbm* as follows:
 	
-	First create the *~/.node_libraries* directory:
+First create the *~/.node_libraries* directory:
 
         cd ~
 		mkdir .node_libraries
