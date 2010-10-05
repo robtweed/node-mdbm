@@ -10,8 +10,20 @@ This is released as Open Source without restriction
 
 ## Installing node-mdbm
 
-    npm install node-mdbm
+I wanted to use the Node Package Manager (npm) but I've so far been unable to make this work.  In the meantime, you can very easily manually install *node-mdbm* as follows:
 	
+	First create the *~/.node_libraries* directory:
+
+        cd ~
+		mkdir .node_libraries
+	
+Now download node-mdbm from GitHub:
+	
+	   git clone git://github.com/robtweed/node-mdbm.git
+	
+ In the downloaded repository directory you'll find the file */lib/mdbMumpsClient.js*.  Simply copy this to your *~/.node_libraries* directory.
+
+		
 ##  Mumps?
 
 Mumps is a little-known, but extremely versatile, high-performance NoSQL database technology.  It stores data in sparse hierarchical array-like structures known as "globals".  These are extremely flexible: unlike other NoSQL databases that are designed with one particular storage model in mind, the Mumps database is more like a "Swiss Army Knife of databases".  You can use a Mumps database to store simple key/value pairs, tabular data (cf BigTable, SimpleDB, Cassandra), documents (cf CouchDB, MongoDB) or more complex data such as graphs or DOMs.  Mumps databases use sophisticated mechanisms for automatically ensuring that the data you require most frequently is cached in memory: you get in-memory key/value store performance with the security and integrity of an on-disk database.
