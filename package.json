@@ -1,6 +1,6 @@
 { "name" : "node-mdbm"
 , "description" : "Mumps (M/DB:Mumps) Client for Node"
-, "version" : "0.0.1"
+, "version" : "0.0.2"
 , "author" : "Rob Tweed <rtweed@mgateway.com>"
 , "repository" :
   { "type" : "git"

@@ -49,6 +49,7 @@ The M/DB system should now be working.  You'll now need to install Node.js, node
        sudo apt-get install git-core
        cd /
        sudo mkdir git
+	   sudo chmod 777 git
        cd git
        git clone git://github.com/ry/node.git
        cd node
