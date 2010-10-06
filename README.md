@@ -166,6 +166,7 @@ Now you can use any of the node-mdbm APIs.
 - getAllSubscripts  (returns an array containing all subscript values below a specified level of subscripting)
 - increment (Atomically increments a global node, using the specified subscripts)
 - decrement (Atomically decrements a global node, using the specified subscripts)
+- remoteFunction   (Execute a function within the Mumps system and return the response)
 - version   (returns the M/DB:Mumps build number and date)
 
 With the exception of *version*, the APIs follow the same pattern:
@@ -323,7 +324,17 @@ With the exception of *version*, the APIs follow the same pattern:
 	
 	    results.value = the new value of the decremented node
 
-		
+- mdbm.remoteFunction(functionName, parameters, function(error, results) {});
+	
+	Execute a Mumps function.  This is usually for legacy applications:
+	
+	functionName = function name/reference (literal), eg 'myFunc^theRoutine'
+	parameters = array specifying the values for the remote function's parameters ('' if no parameters required)
+	    eg ["a","b","c"] 
+	
+	Returns:
+	
+	    results.value = the response/result returned by the remote function
 		
 ## Examples
 
