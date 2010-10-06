@@ -328,7 +328,7 @@ With the exception of *version*, the APIs follow the same pattern:
 	
 	Execute a Mumps function.  This is usually for legacy applications:
 	
-	functionName = function name/reference (literal), eg 'myFunc\^theRoutine'
+	functionName = function name/reference (literal), eg '<pre>myFunc^theRoutine</pre>'
 	parameters = array specifying the values for the remote function's parameters ('' if no parameters required)
 	    eg ["a","b","c"] 
 	
