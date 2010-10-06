@@ -35,7 +35,7 @@ Don't worry if you're new to Mumps and don't know what these components are or h
 
 The instructions below assume you'll be installing Node.js and node-mdbm on the same server.
 
-You can use apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.
+You can apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.
 
 So, for example, to create an M/DB Appliance using Amazon EC2:
 
