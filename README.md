@@ -9,18 +9,7 @@ Inspired by node-apac (thanks to Dustin McQuay [dmcquay])
 
 ## Installing node-mdbm
 
-I wanted to use the Node Package Manager (npm) but I've so far been unable to make this work.  In the meantime, you can very easily manually install *node-mdbm* as follows:
-	
-First create the *~/.node_libraries* directory:
-
-        cd ~
-		mkdir .node_libraries
-	
-Now download node-mdbm from GitHub:
-	
-	   git clone git://github.com/robtweed/node-mdbm.git
-	
- In the downloaded repository directory you'll find the file */lib/mdbMumpsClient.js*.  Simply copy this to your *~/.node_libraries* directory.
+       npm install node-mdbm
 
 		
 ##  Mumps?
@@ -57,9 +46,8 @@ If you point a browser at the domain name/IP address assigned to the Ubuntu mach
 
 The M/DB system should now be working.  In order to enable it for use with Node.js and node-mdbm, you'll need to upgrade MDB.m, MDBMumps.m and EWD as follows:
 
-- Install git - we'll be needing this to fetch the various resources we need:
+- Install git - we'll be needing this to fetch the various resources we need.  Here I've created a new directory */git* which is where I'll put all the respositories I download, but you can use whatever directory you wish:
 
-       sudo apt-get install g++ curl openssl libssl-dev apache2-utils
        sudo apt-get install git-core
        cd /
        sudo mkdir git
@@ -88,6 +76,7 @@ If you want to make a completely self-contained test system that also includes N
 	      
 - Install node.js:
 
+       sudo apt-get install g++ curl openssl libssl-dev apache2-utils
        git clone git://github.com/ry/node.git
        cd node
        ./configure
@@ -100,25 +89,16 @@ If you want to make a completely self-contained test system that also includes N
         v0.3.0-pre
 
   
-- Install node-mdbm
+- Install npm (Node.js Package manager)
 
-    I wanted to use the Node Package Manager (npm) but I've so far been unable to make this work.  In the meantime, you can very easily manually install node-mdbm as follows:
+        cd /git
+		sudo chown -R $USER /usr/local
+		curl http://npmjs.org/install.sh | sh
 	
-	First create the *~/.node_libraries* directory:
+	Now install npm
 
-        cd ~
-		mkdir .node_libraries
+        npm install node-mdbm
 	
-	Now download node-mdbm from GitHub:
-	
-       cd /git
-	   git clone git://github.com/robtweed/node-mdbm.git
-	
-    Then just copy */git/node-mdbm/lib/mdbMumpsClient.js* to your *~/.node_libraries* directory:
-	
-	    cp /git/node-mdbm/lib/mdbMumpsClient.js ~/.node_libraries
-
-
 OK! That's it all installed. You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
@@ -126,7 +106,7 @@ OK! That's it all installed. You should now be ready to try out node-mdbm!
   In */usr/local/gtm/ewd* create a file named *test1.js* containing:
   
     var sys = require("sys");
-    var mdbmif = require("mdbMumpsClient");
+    var mdbmif = require("node-mdbm");
     var mdbm = new mdbmif.Client({
        mdbId:'<yourId>',
        mdbSecret:'<your secret key>',
@@ -159,7 +139,7 @@ If this is what you get, then you have Node.js successfully communicating with y
 
 To use node-mdbm in your Node.js applications, you must add:
 
-        var mdbmif = require("mdbMumpsClient");
+        var mdbmif = require("node-mdbm");
 		
 Then create a new instance of the node-mdbm client object:
 
@@ -169,7 +149,7 @@ Then create a new instance of the node-mdbm client object:
          endPoint: '127.0.0.1'
       });
 	
-You must specify a valid M/DB User ID and Secret Key.  Use the values you put in the MDB.conf file when you initialised M/DB.  (*Normally the endPoint should be 127.0.0.1, but you can access a remote GT.M system from Node.js by specifying its IP Address or Domain Name.  Note that in order to access a remote GT.M system using node-mdbm you must install M/DB and M/DB:Mumps on the GT.M system*)
+You must specify a valid M/DB User ID and Secret Key.  Use the values you put in the MDB.conf file when you initialised M/DB.  (*If you using a self-contained M/DB Appliance-based system, the endPoint should be 127.0.0.1, but you can access a remote GT.M system from Node.js by specifying its IP Address or Domain Name.  Note that in order to access a remote GT.M system using node-mdbm you must install M/DB, M/DB:Mumps and EWD on the GT.M system*)
 	
 Now you can use any of the node-mdbm APIs.
 
@@ -358,7 +338,7 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
 
 
     var sys = require("sys");
-    var mdbmif = require("mdbMumpsClient");
+    var mdbmif = require("node-mdbm");
     
     var mdbm = new mdbmif.Client({
        mdbId:'<your Id>',

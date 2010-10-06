@@ -1,5 +1,5 @@
 var sys = require("sys");
-var mdbmif = require("mdbMumpsClient");
+var mdbmif = require("node-mdbm");
 
 // change endPoint to a different IP address/domain name if GT.M is running on a different server to Node.js
 
@@ -10,7 +10,7 @@ var mdbm = new mdbmif.Client({
 });
 
 
-mdbm.decrement('mdbmTest8', ["this"], 2,
+mdbm.increment('mdbmTest8', ["this"], 2,
    function(error, results) {
           if (error) { 
              sys.print('Error: ' + error + "\n");
