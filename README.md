@@ -4,8 +4,10 @@ node.js client for M/DB:Mumps (HTTP-enabled GT.M or Cache instance)
 
 Inspired by node-apac (thanks to Dustin McQuay [dmcquay])
 
+Rob Tweed <rtweed@mgateway.com>
 29 September 2010, M/Gateway Developments Ltd
 
+Twitter: @rtweed
 
 ## Installing node-mdbm
 
