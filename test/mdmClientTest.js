@@ -22,6 +22,31 @@ mdbm.increment('mdbmTest8', ["this"], 2,
    }
 );
 
+   var action1 = {
+      method:'setJSON',
+      globalName:'mdbmTest9',
+      subscripts:['a'],
+      json:{this:{is:{too:'cool',really:"nice!"}}}
+   };
+   var action2 = {
+      method:'kill',
+      globalName:'mdbmTest9',
+      subscripts:['b','c']
+   };
+   var json = [action1,action2];
+
+    mdbm.transaction(json,
+       function(error, results) {
+             if (error) { 
+                sys.print('Error: ' + error + "\n");
+                sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
+             }
+             else {
+               sys.puts(results.ok);
+             }
+       }
+    );
+
 /*
 mdbm.getAllSubscripts('mdbmTest7', ["this"],
    function(error, results) {

@@ -169,6 +169,7 @@ Now you can use any of the node-mdbm APIs.
 - increment (Atomically increments a global node, using the specified subscripts)
 - decrement (Atomically decrements a global node, using the specified subscripts)
 - remoteFunction   (Execute a function within the Mumps system and return the response)
+- transaction   (Execute a sequence of Global manipulations in strict order, specified as an array of setJSON and kill JSON documents.)
 - version   (returns the M/DB:Mumps build number and date)
 
 With the exception of *version*, the APIs follow the same pattern:
@@ -326,6 +327,33 @@ With the exception of *version*, the APIs follow the same pattern:
 	
 	    results.value = the new value of the decremented node
 
+- mdbm.transaction(json, function(error, results) {});
+	
+	Invokes a sequence of actions within the back-end Mumps system.  These actions are applied in strict sequence and constitute a transaction.
+	
+	json = a JSON array of object literals.  Each object literal defines either a setJSON or kill command.
+
+	For example:
+	
+		var action1 = {
+			method:'setJSON',
+			globalName:'mdbmTest9',
+			subscripts:['a'],
+			json:{this:{is:{too:'cool',really:"nice!"}}}
+		};
+		var action2 = {
+			method:'kill',
+			globalName:'mdbmTest9',
+			subscripts:['b','c']
+		};
+		var json = [action1,action2];
+	
+	Returns ok=true if successful, ie:
+	
+       results.ok = true
+
+	In the example above, the actions are invoked in the Mumps back-end in strict sequence according to their position in the *json* array, ie *action1*, followed by *action 2*.  The transaction details are sent as a single request to the Mumps back-end from Node.js and the invocation of the commands that make up the transaction occurs entirely within the Mumps back-end system.  As a result, the Node.js thread is not blocked.  The call-back function is invoked only when the entire transaction has completed at the back-end.
+		
 - mdbm.remoteFunction(functionName, parameters, function(error, results) {});
 	
 	Execute a Mumps function.  This is usually for legacy applications:
