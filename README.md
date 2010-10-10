@@ -438,6 +438,58 @@ and the original JSON could be retrieved using:
        }
     );
 	
+## Using node-mdbm with Cach&#233;
+
+The node-mdbm client can be used with a Cach&#233; database, and both WebLink and CSP are supported.  
+
+You need to install Node.js and the node-mdbm client as described earlier, but on the Cache back-end system, you need to do the following:
+
+- download the M/DB files from the robtweed/mdb repository (git@github.com:robtweed/mdb.git)
+
+- you'll find a directory named /cache and inside it is a file named mdb.ro.  Use %RI or equivalent to install the MDB* routines that it contains into your working namespace (eg USER)
+
+- Run the following commands in a Cach&#233; terminal window (in your working namespace, eg USER):
+
+      s key="<your M/DB user ID>"
+	  s secret="<your M/DB secret key>"
+      s ok=$$createAdministrator^MDBConfig(key,secret)
+      s ok=$$reset^MDBConfig(key,secret)
+
+Note: replace the bits above in angled brackets with the values you want to use as your M/DB user ID and secret key
+
+- Set up the dispatch mapping table for M/DB:Mumps:
+
+          d install^MDBMumps
+
+- If you're going to use WebLink, define the dispatch routine mapping:
+
+          s ^MGWAPP("mdb")="response^MDB"
+
+- If you're going to use CSP, have a look in the robtweed/mdb repository and you'll find a directory named /csp.  Inside this you'll find a file named mdbm.csp.  Copy this to a convenient CSP application path, eg /csp/ewd  You may also need to edit the line baseUri+1 in the routine MDBMCache to match the path you've used for this CSP page.  You may need to set up/modify the CSP application parameters for the path you've used.
+
+- You should be ready to try it out.  If you're using WebLink, you'll need to modify the parameters at the start of your Javascript file(s), specifically the endPoint, baseUri and the webLink properties, eg:
+
+        var mdbm = new mdbmif.Client({
+            mdbId:'<your M/DB user ID>',
+            mdbSecret:'<Your M/DB secret key>',
+            endPoint: '192.168.1.106',
+            baseUri: '/scripts/mgwms32.dll',
+            webLink: {MGWLPN:"LOCAL",MGWAPP:"mdb"}
+		};
+
+If you're using CSP, this section should look like the following:
+
+        var mdbm = new mdbmif.Client({
+            mdbId:'<your M/DB user ID>',
+            mdbSecret:'<Your M/DB secret key>',
+            endPoint: '192.168.1.106',
+            baseUri: '/csp/ewd/mdbm.csp'
+        });
+
+	The baseUri should match where you put the mdbm.csp page on your Cach&#233; system.
+	
+		
+
 ## License
 
 Copyright (c) 2004-10 M/Gateway Developments Ltd,
