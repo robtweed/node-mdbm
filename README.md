@@ -486,7 +486,7 @@ If you're using CSP, this section should look like the following:
             baseUri: '/csp/ewd/mdbm.csp'
         });
 
-	The baseUri should match where you put the mdbm.csp page on your Cach&#233; system.
+Note: The baseUri path should be appropriate to where you put the mdbm.csp page on your Cach&#233; system.
 	
 		
 
