@@ -9,6 +9,8 @@ Rob Tweed <rtweed@mgateway.com>
 
 Twitter: @rtweed
 
+Google Group for discussions, support, advice etc: [http://groups.google.co.uk/group/mdb-community-forum](http://groups.google.co.uk/group/mdb-community-forum)
+
 ## Installing node-mdbm
 
        npm install node-mdbm
