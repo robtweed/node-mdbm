@@ -26,12 +26,14 @@ OK, enough of the hyperbole! :-)
 
 ##  Installing the Mumps back-end System
 
-In order to use node-mdbm you'll need to have a Linux system with GT.M installed and also:
+In order to use *node-mdbm* you'll need to have a Linux system with GT.M installed and also:
 
 - M/DB (latest version from the repository: *robtweed/mdb*)
 - M/DB:Mumps (latest version from the repository: *robtweed/mdb*)
 - EWD (latest version from the respository: *robtweed/EWD*)
 - Apache and our *m_apache* gateway.
+
+Note: *node-mdbm* also works with the Cach&#233; database.  See instructions at the end of this README file.
 
 Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB, M/DB:Mumps and EWD and you'll have a Mumps server that's ready for use with Node.js and node-mdbm.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.
 
@@ -444,9 +446,11 @@ The node-mdbm client can be used with a Cach&#233; database, and both WebLink an
 
 You need to install Node.js and the node-mdbm client as described earlier, but on the Cache back-end system, you need to do the following:
 
-- download the M/DB files from the robtweed/mdb repository (git@github.com:robtweed/mdb.git)
+- download the M/DB files from the **robtweed/mdb** repository (*git@github.com:robtweed/mdb.git*)
 
-- you'll find a directory named /cache and inside it is a file named mdb.ro.  Use %RI or equivalent to install the MDB* routines that it contains into your working namespace (eg USER)
+- install EWD for Cach&#233 (build 827 or later): [http://www.mgateway.com/ewd.html]{http://www.mgateway.com/ewd.html}
+
+- you'll find a directory named */cache* in the **robtweed/mdb** repository and inside it is a file named **mdb.ro**.  Use %RI or equivalent to install the MDB routines that it contains into your working namespace (eg USER)
 
 - Run the following commands in a Cach&#233; terminal window (in your working namespace, eg USER):
 
@@ -465,9 +469,9 @@ Note: replace the bits above in angled brackets with the values you want to use 
 
           s ^MGWAPP("mdb")="response^MDB"
 
-- If you're going to use CSP, have a look in the robtweed/mdb repository and you'll find a directory named /csp.  Inside this you'll find a file named mdbm.csp.  Copy this to a convenient CSP application path, eg /csp/ewd  You may also need to edit the line baseUri+1 in the routine MDBMCache to match the path you've used for this CSP page.  You may need to set up/modify the CSP application parameters for the path you've used.
+- If you're going to use CSP, have a look in the **robtweed/mdb** repository and you'll find a directory named */csp*.  Inside this you'll find a file named **mdbm.csp**.  Copy this to a convenient CSP application path, eg */csp/ewd*  You may also need to edit the line *baseUri+1* in the routine *MDBMCache* to match the path you've used for this CSP page.  You may need to set up/modify the CSP application parameters for the path you've used.
 
-- You should be ready to try it out.  If you're using WebLink, you'll need to modify the parameters at the start of your Javascript file(s), specifically the endPoint, baseUri and the webLink properties, eg:
+- You should be ready to try it out.  If you're using WebLink, you'll need to modify the parameters at the start of your Javascript file(s), specifically the *endPoint*, *baseUri* and the *webLink* properties, eg:
 
         var mdbm = new mdbmif.Client({
             mdbId:'<your M/DB user ID>',
@@ -486,7 +490,7 @@ If you're using CSP, this section should look like the following:
             baseUri: '/csp/ewd/mdbm.csp'
         });
 
-Note: The baseUri path should be appropriate to where you put the mdbm.csp page on your Cach&#233; system.
+Note: The *baseUri* path should be appropriate to where you put the *mdbm.csp* page on your Cach&#233; system.
 	
 		
 
