@@ -446,9 +446,9 @@ The node-mdbm client can be used with a Cach&#233; database, and both WebLink an
 
 You need to install Node.js and the node-mdbm client as described earlier, but on the Cache back-end system, you need to do the following:
 
-- download the M/DB files from the **robtweed/mdb** repository (*git@github.com:robtweed/mdb.git*)
+- download the M/DB files from the **robtweed/mdb** repository (*http://github.com:robtweed/mdb.git*)
 
-- install EWD for Cach&#233 (build 827 or later): [http://www.mgateway.com/ewd.html]{http://www.mgateway.com/ewd.html}
+- install EWD for Cach&#233; (build 827 or later): [http://www.mgateway.com/ewd.html](http://www.mgateway.com/ewd.html)
 
 - you'll find a directory named */cache* in the **robtweed/mdb** repository and inside it is a file named **mdb.ro**.  Use %RI or equivalent to install the MDB routines that it contains into your working namespace (eg USER)
 
