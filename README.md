@@ -1,6 +1,6 @@
 # node-mdbm
  
-node.js client for M/DB:Mumps (HTTP-enabled GT.M or Cache instance)
+node.js client for accessing GT.M and Cach&#233; Globals (via secured HTTP)
 
 Inspired by node-apac (thanks to Dustin McQuay [dmcquay])
 
@@ -16,32 +16,33 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
        npm install node-mdbm
 
 		
-##  Mumps?
+##  GT.M and Cach&#233; Globals?
 
-Mumps is a little-known, but extremely versatile, high-performance NoSQL database technology.  It stores data in sparse hierarchical array-like structures known as "globals".  These are extremely flexible: unlike other NoSQL databases that are designed with one particular storage model in mind, the Mumps database is more like a "Swiss Army Knife of databases".  You can use a Mumps database to store simple key/value pairs, tabular data (cf BigTable, SimpleDB, Cassandra), documents (cf CouchDB, MongoDB) or more complex data such as graphs or DOMs.  Mumps databases use sophisticated mechanisms for automatically ensuring that the data you require most frequently is cached in memory: you get in-memory key/value store performance with the security and integrity of an on-disk database.
+GT.M and Cach&#233; are relatively little-known, but extremely versatile, high-performance NoSQL databases.  They both store data in sparse hierarchical array-like structures known as "Globals".  These are extremely flexible: unlike other NoSQL databases that are designed with one particular storage model in mind, Global-based databases are more like a "Swiss Army Knife of databases".  You can use Globals to store simple key/value pairs, tabular data (cf BigTable, SimpleDB, Cassandra), documents (cf CouchDB, MongoDB) or more complex data such as graphs or DOMs.  GT.M and Cach&#233; use sophisticated mechanisms for automatically ensuring that the data you require most frequently is cached in memory: you get in-memory key/value store performance with the security and integrity of an on-disk database.
 
-GT.M is one such implementation of the Mumps database that is available as a Free Open Source version.  For more information on GT.M, see [http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm](http://fisglobal.com/Products/TechnologyPlatforms/GTM/index.htm)
+For more background on Globals, you should read [http://www.mgateway.com/docs/universalNoSQL.pdf](http://www.mgateway.com/docs/universalNoSQL.pdf)
 
-I've developed *node-mbdm* to make it possible for the growing Node.js community to benefit from this great database technology. The combination of Node.js and Mumps is truly remarkable, and I'm hoping node-mdm will result in Mumps becoming much better known.
+GT.M is a particularly attractive option as it is available as a Free Open Source version.
 
-OK, enough of the hyperbole! :-)
+I've developed *node-mbdm* to make it possible for the growing Node.js community to benefit from the great flexibility and performance that these Global-based databases provide. The combination of Node.js and Globals is truly remarkable, and I'm hoping node-mdm will result in them becoming much better known for NoSQL database storage.
 
-##  Installing the Mumps back-end System
 
-In order to use *node-mdbm* you'll need to have a Linux system with GT.M installed and also:
+##  Installing the Global-based back-end System
+
+In order to use *node-mdbm* you'll need to have a have a Cach&#233; system or a Linux system with GT.M installed.  You'll also need to install the following on the GT.M or Cach&#233; system:
 
 - M/DB (latest version from the repository: *robtweed/mdb*)
 - M/DB:Mumps (latest version from the repository: *robtweed/mdb*)
 - EWD (latest version from the respository: *robtweed/EWD*)
 - Apache and our *m_apache* gateway.
 
-Note: *node-mdbm* also works with the Cach&#233; database.  See instructions at the end of this README file.
+I've provided specific instructions for Cach&#233; at the end of this README file.  If you'd prefer to use the Free Open Source GT.M database, read on:
 
-Don't worry if you're new to Mumps and don't know what these components are or how to install them.  The easiest way to get a Mumps back-end system going is to use Mike Clayton's M/DB installer for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB, M/DB:Mumps and EWD and you'll have a Mumps server that's ready for use with Node.js and node-mdbm.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.
+The easiest way to get a GT.M system going is to use Mike Clayton's *M/DB installer* for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB, M/DB:Mumps and EWD and you'll have a GT.M database server that's ready for use with Node.js and node-mdbm.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.
 
 The instructions below assume you'll be installing Node.js and node-mdbm on the same server.
 
-You can apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.
+You can apply Mike's installer to a Ubuntu Linux system running on your own hardware, or running as a virtual machine.  However, I find Amazon EC2 servers to be ideal for trying this kind of stuff out.  I've tested it with both Ubuntu 10.4 and 10.10.
 
 So, for example, to create an M/DB Appliance using Amazon EC2:
 
@@ -64,11 +65,11 @@ The M/DB system should now be working.  In order to enable it for use with Node.
 
 	   git clone git://github.com/robtweed/mdb.git
     
-  Then copy the files *MDB.m* and *MDBMumps.m* from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
+  Then copy all the files with *.m* file extensions from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
 
 	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
 
-- Update EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
+- Update the EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
 
 	   git clone git://github.com/robtweed/EWD.git
     
@@ -139,7 +140,7 @@ Now run it (from within */usr/local/gtm/ewd*).  If everything is working properl
     5
     04 October 2010
 
-If this is what you get, then you have Node.js successfully communicating with your GT.M Mumps database.
+If this is what you get, then you have Node.js successfully communicating with your GT.M database.
 	
 ## Running node-mdbm
 
@@ -162,17 +163,17 @@ Now you can use any of the node-mdbm APIs.
 
 ## APIs
 
-- set       (sets a global, using the specified subscripts and data value)
-- get       (gets a global node, using the specified subscripts)
-- setJSON   (maps a JSON object to a Mumps global)
-- getJSON   (returns a JSON object from Mumps global storage)
-- kill      (deletes a global node, using the specified subscripts)
-- getNextSubscript     (returns the next subscript at a specified level of global subscripting)
-- getPreviousSubscript     (returns the next subscript at a specified level of global subscripting)
+- set       (sets a Global node, using the specified subscripts and data value)
+- get       (gets a Global node, using the specified subscripts)
+- setJSON   (maps a JSON object to a Global)
+- getJSON   (returns a JSON object from Global storage)
+- kill      (deletes a Global node, using the specified subscripts)
+- getNextSubscript     (returns the next subscript at a specified level of Global subscripting)
+- getPreviousSubscript     (returns the next subscript at a specified level of Global subscripting)
 - getAllSubscripts  (returns an array containing all subscript values below a specified level of subscripting)
-- increment (Atomically increments a global node, using the specified subscripts)
-- decrement (Atomically decrements a global node, using the specified subscripts)
-- remoteFunction   (Execute a function within the Mumps system and return the response)
+- increment (Atomically increments a Global node, using the specified subscripts)
+- decrement (Atomically decrements a Global node, using the specified subscripts)
+- remoteFunction   (Execute a function within the GT.M or Cach&#233; system and return the response)
 - transaction   (Execute a sequence of Global manipulations in strict order, specified as an array of setJSON and kill JSON documents.)
 - version   (returns the M/DB:Mumps build number and date)
 
@@ -188,25 +189,25 @@ With the exception of *version*, the APIs follow the same pattern:
 	    results.Date = build date
 	
 	
-- mdbm.set(globalName, subscripts, value, function(error, results) {});
+- mdbm.set(GlobalName, subscripts, value, function(error, results) {});
 	
-	Sets a global node:
+	Sets a Global node:
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = array specifying the subscripts ('' if value to be set at top of global)
+	GlobalName = name of Global (literal)  
+	subscripts = array specifying the subscripts ('' if value to be set at top of Global)
 	    eg ["a","b","c"]
-	value = the data value to be set at the specified global node
+	value = the data value to be set at the specified Global node
 	
 	Returns ok=true if successful, ie:
 	
        results.ok = true
 
-- mdbm.get(globalName, subscripts, function(error, results) {});
+- mdbm.get(GlobalName, subscripts, function(error, results) {});
 
-	Gets the value for a global node:
+	Gets the value for a Global node:
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = optional array specifying the subscripts ('' if value at top of global to be returned)
+	GlobalName = name of Global (literal)  
+	subscripts = optional array specifying the subscripts ('' if value at top of Global to be returned)
 	    eg ["a","b","c"]
 	
 	Returns the value (if any) and the status of the specified node
@@ -219,12 +220,12 @@ With the exception of *version*, the APIs follow the same pattern:
 	   If the specified node exists, has lower-level subscripts has a data value, results.dataStatus = 11 and results.value = the value of the node
 	   If the specified node exists, has no lower-level subscripts and has a data value, results.dataStatus = 1 and results.value = the value of the node
 	   
-- mdbm.setJSON(globalName, subscripts, json, deleteBeforeSave, function(error, results) {});
+- mdbm.setJSON(GlobalName, subscripts, json, deleteBeforeSave, function(error, results) {});
 
-    Maps the specified JSON object and saves it into a Mumps global node.  The JSON object can be saved into the top node of a Mumps global, or merged under a specified subscript level within a Mumps global.  Optionally you can clear down any existing data at the specified global node.  The default is the new JSON object gets merged with existing data in the global.
+    Maps the specified JSON object and saves it into a Global node.  The JSON object can be saved into the top node of a Global, or merged under a specified subscript level within a Global.  Optionally you can clear down any existing data at the specified Global node.  The default is the new JSON object gets merged with existing data in the Global.
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
+	GlobalName = name of Global (literal)  
+	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of Global)
 	    eg ["a","b","c"]
 	json = the JSON object to be saved (object literal)  
 	deleteBeforeSave = true|false (default = false)
@@ -233,12 +234,12 @@ With the exception of *version*, the APIs follow the same pattern:
 	
        results.ok = true
 	   
-- mdbm.getJSON(globalName, subscripts, function(error, results) {});
+- mdbm.getJSON(GlobalName, subscripts, function(error, results) {});
 
-    Gets the data stored at and under the specified global node, and maps it to a JSON object before returning it.
+    Gets the data stored at and under the specified Global node, and maps it to a JSON object before returning it.
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of global)
+	GlobalName = name of Global (literal)  
+	subscripts = optional array specifying the subscripts ('' if JSON to be stored at top level of Global)
 	    eg ["a","b","c"]
 
 	
@@ -246,23 +247,23 @@ With the exception of *version*, the APIs follow the same pattern:
 	
        results = returned JSON object
 	   
-- mdbm.kill(globalName, subscripts, function(error, results) {});
+- mdbm.kill(GlobalName, subscripts, function(error, results) {});
 	
-	Deletes a global node and the sub-tree below it:
+	Deletes a Global node and the sub-tree below it:
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = array specifying the subscripts ('' if the entire global is to be deleted)
+	GlobalName = name of Global (literal)  
+	subscripts = array specifying the subscripts ('' if the entire Global is to be deleted)
 	    eg ["a","b","c"]
 	
 	Returns ok=true if successful, ie:
 	
        results.ok = true
 	
-- mdbm.getNextSubscript(globalName, subscripts, function(error, results) {});
+- mdbm.getNextSubscript(GlobalName, subscripts, function(error, results) {});
 	
 	Gets the next subscript value (if any) in collating sequence at the specified level of subscripting, following the last specified subscript:
 	
-	globalName = name of Mumps global (literal)  
+	GlobalName = name of Global (literal)  
 	subscripts = array specifying the subscripts ('' if the first 1st subscript is to be returned)
 	    eg ["a","b","c"]  will return the value of the 3rd subscript the follows the value "c" where subscript1 = "a" and subscript2 = "b"
 	
@@ -275,11 +276,11 @@ With the exception of *version*, the APIs follow the same pattern:
 					1  = data at the next subscripted node, but no child subscripts exist
 		results.dataValue = the value (if any) at the next subscript
 
-- mdbm.getPreviousSubscript(globalName, subscripts, function(error, results) {});
+- mdbm.getPreviousSubscript(GlobalName, subscripts, function(error, results) {});
 	
 	Gets the previous subscript value (if any) in collating sequence at the specified level of subscripting, preceding the last specified subscript:
 	
-	globalName = name of Mumps global (literal)  
+	GlobalName = name of Global (literal)  
 	subscripts = array specifying the subscripts ('' if the last 1st subscript is to be returned)
 	    eg ["a","b","c"]  will return the value of the 3rd subscript the precedes the value "c" where subscript1 = "a" and subscript2 = "b"
 	
@@ -292,40 +293,40 @@ With the exception of *version*, the APIs follow the same pattern:
 					1  = data at the previous subscripted node, but no child subscripts exist
 		results.dataValue = the value (if any) at the previous subscript
 
-- mdbm.getAllSubscripts(globalName, subscripts, function(error, results) {});
+- mdbm.getAllSubscripts(GlobalName, subscripts, function(error, results) {});
 	
 	Gets all the values of the subscripts that exist below the specified subscript(s):
 	
-	globalName = name of Mumps global (literal)  
+	GlobalName = name of Global (literal)  
 	subscripts = array specifying the required subscripts ('' if all 1st subscript values are to be returned)
 	    eg ["a","b","c"]  will return an array of all subscripts that exist below this level of subscripting
 		
 	
 	Returns:
 	
-	    results = array of all subscripts found immediately below the specified global node.
+	    results = array of all subscripts found immediately below the specified Global node.
 
-- mdbm.increment(globalName, subscripts, delta, function(error, results) {});
+- mdbm.increment(GlobalName, subscripts, delta, function(error, results) {});
 	
-	Atomically increments the speficied global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
+	Atomically increments the speficied Global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = array specifying the required subscripts ('' if the top-level global node is to be incremented)
+	GlobalName = name of Global (literal)  
+	subscripts = array specifying the required subscripts ('' if the top-level Global node is to be incremented)
 	    eg ["a","b","c"] 
-	delta: the amount by which the specified global node is to be incremented (default = 1)	
+	delta: the amount by which the specified Global node is to be incremented (default = 1)	
 	
 	Returns:
 	
 	    results.value = the new value of the incremented node
 
-- mdbm.decrement(globalName, subscripts, delta, function(error, results) {});
+- mdbm.decrement(GlobalName, subscripts, delta, function(error, results) {});
 	
-	Atomically decrements the speficied global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
+	Atomically decrements the speficied Global node by the specified amount.  If the node does not exist, it is created and its initial value is assumed to be zero:
 	
-	globalName = name of Mumps global (literal)  
-	subscripts = array specifying the required subscripts ('' if the top-level global node is to be decremented)
+	GlobalName = name of Global (literal)  
+	subscripts = array specifying the required subscripts ('' if the top-level Global node is to be decremented)
 	    eg ["a","b","c"] 
-	delta: the amount by which the specified global node is to be decremented (default = 1)	
+	delta: the amount by which the specified Global node is to be decremented (default = 1)	
 	
 	Returns:
 	
@@ -333,7 +334,7 @@ With the exception of *version*, the APIs follow the same pattern:
 
 - mdbm.transaction(json, function(error, results) {});
 	
-	Invokes a sequence of actions within the back-end Mumps system.  These actions are applied in strict sequence and constitute a transaction.
+	Invokes a sequence of actions within the back-end GT.M or Cach&#233; system.  These actions are applied in strict sequence and constitute a transaction.
 	
 	json = a JSON array of object literals.  Each object literal defines either a setJSON or kill command.
 
@@ -341,13 +342,13 @@ With the exception of *version*, the APIs follow the same pattern:
 	
 		var action1 = {
 			method:'setJSON',
-			globalName:'mdbmTest9',
+			GlobalName:'mdbmTest9',
 			subscripts:['a'],
 			json:{this:{is:{too:'cool',really:"nice!"}}}
 		};
 		var action2 = {
 			method:'kill',
-			globalName:'mdbmTest9',
+			GlobalName:'mdbmTest9',
 			subscripts:['b','c']
 		};
 		var json = [action1,action2];
@@ -356,11 +357,11 @@ With the exception of *version*, the APIs follow the same pattern:
 	
        results.ok = true
 
-	In the example above, the actions are invoked in the Mumps back-end in strict sequence according to their position in the *json* array, ie *action1*, followed by *action 2*.  The transaction details are sent as a single request to the Mumps back-end from Node.js and the invocation of the commands that make up the transaction occurs entirely within the Mumps back-end system.  As a result, the Node.js thread is not blocked.  The call-back function is invoked only when the entire transaction has completed at the back-end.
+	In the example above, the actions are invoked in the GT.M or Cach&#233; back-end in strict sequence according to their position in the *json* array, ie *action1*, followed by *action 2*.  The transaction details are sent as a single request to the back-end from Node.js and the invocation of the commands that make up the transaction occurs entirely within the back-end system.  As a result, the Node.js thread is not blocked.  The call-back function is invoked only when the entire transaction has completed at the back-end.
 		
 - mdbm.remoteFunction(functionName, parameters, function(error, results) {});
 	
-	Execute a Mumps function.  This is usually for legacy applications:
+	Execute a native GTM or Cach&#233; function.  This is usually for legacy applications:
 	
 	functionName = function name/reference (literal), eg 'myFunc&#94;theRoutine'  
 	parameters = array specifying the values for the remote function's parameters ('' if no parameters required)
@@ -372,14 +373,14 @@ With the exception of *version*, the APIs follow the same pattern:
 		
 ## Examples
 
-To set the global:  
+To set the Global:  
 
 
     ^mdbmTest("check","this","out")="Too cool!"
 
    
-and then retrieve the value again (note the asynchronous nature of node.js will 
-not guarantee the order in which the APIs below are executed in the Mumps back-end)
+and then retrieve the value again (note the asynchronous nature of Node.js will 
+not guarantee the order in which the APIs below are executed in the GT.M or Cach&#233; back-end)
 
 
     var sys = require("sys");
@@ -413,7 +414,7 @@ not guarantee the order in which the APIs below are executed in the Mumps back-e
        }
     );
 
-Note: this global node could also have been created using SetJSON:
+Note: this Global node could also have been created using SetJSON:
 
     var json = {"check":{"this":{"out":"Too cool!"}}};
     mdbm.setJSON('mdbmTest', '', json, true,
