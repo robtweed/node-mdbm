@@ -5,7 +5,7 @@ node.js client for accessing GT.M and Cach&#233; Globals (via secured HTTP)
 Inspired by node-apac (thanks to Dustin McQuay [dmcquay])
 
 Rob Tweed <rtweed@mgateway.com>  
-29 September 2010, M/Gateway Developments Ltd (http://www.mgateway.com)  
+29 September 2010, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)  
 
 Twitter: @rtweed
 
