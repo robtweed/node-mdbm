@@ -168,6 +168,7 @@ Now you can use any of the node-mdbm APIs.
 - setJSON   (maps a JSON object to a Global)
 - getJSON   (returns a JSON object from Global storage)
 - kill      (deletes a Global node, using the specified subscripts)
+- getGlobalList  (returns an array of Global names that exist in your database)
 - getNextSubscript     (returns the next subscript at a specified level of Global subscripting)
 - getPreviousSubscript     (returns the next subscript at a specified level of Global subscripting)
 - getAllSubscripts  (returns an array containing all subscript values below a specified level of subscripting)
