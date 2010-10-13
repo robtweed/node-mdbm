@@ -260,6 +260,11 @@ With the exception of *version*, the APIs follow the same pattern:
 	
        results.ok = true
 	
+- mdbm.getGlobalList(function(error, results) {});
+
+    Returns an array of Global Names in your database (ie results):
+
+	
 - mdbm.getNextSubscript(GlobalName, subscripts, function(error, results) {});
 	
 	Gets the next subscript value (if any) in collating sequence at the specified level of subscripting, following the last specified subscript:
