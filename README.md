@@ -112,7 +112,6 @@ OK! That's it all installed. You should now be ready to try out node-mdbm!
 
   In */usr/local/gtm/ewd* create a file named *test1.js* containing:
   
-    var sys = require("sys");
     var mdbmif = require("node-mdbm");
     var mdbm = new mdbmif.Client({
        mdbId:'<yourId>',
@@ -122,11 +121,11 @@ OK! That's it all installed. You should now be ready to try out node-mdbm!
     mdbm.version( 
        function(error, results) {
           if (error) { 
-             sys.print('Error: ' + error + "\n");
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
+             console.log('Error: ' + error + "\n");
+             console.log(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
           }
           else {
-            sys.puts(results.Name + "\n" + results.Build + "\n" + results.Date + "\n");
+            console.log(results.Name + "\n" + results.Build + "\n" + results.Date + "\n");
           }
        }
     );
@@ -389,7 +388,6 @@ and then retrieve the value again (note the asynchronous nature of Node.js will
 not guarantee the order in which the APIs below are executed in the GT.M or Cach&#233; back-end)
 
 
-    var sys = require("sys");
     var mdbmif = require("node-mdbm");
     
     var mdbm = new mdbmif.Client({
@@ -400,22 +398,22 @@ not guarantee the order in which the APIs below are executed in the GT.M or Cach
     mdbm.set('mdbmTest', ["check","this","out"], "Too cool!",
        function(error, results) {
              if (error) { 
-                sys.print('Error: ' + error + "\n");
-                sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n");
+                console.log('Error: ' + error + "\n");
+                console.log(results.ErrorCode + ": " + results.ErrorMessage + "\n");
              }
              else {
-               sys.puts(results.ok + "\n");
+               console.log(results.ok + "\n");
              }
        }
     );
     mdbm.get('mdbmTest', ["check","this","out"],
        function(error, results) {
              if (error) {
-                sys.print('Error: ' + error + "\n");
-                sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n");
+                console.log('Error: ' + error + "\n");
+                console.log(results.ErrorCode + ": " + results.ErrorMessage + "\n");
              }
              else {
-               sys.puts("dataStatus=" + results.dataStatus + "\nvalue=" + results.value + "\n");
+               console.log("dataStatus=" + results.dataStatus + "\nvalue=" + results.value + "\n");
              }
        }
     );
@@ -426,11 +424,11 @@ Note: this Global node could also have been created using SetJSON:
     mdbm.setJSON('mdbmTest', '', json, true,
        function(error, results) {
              if (error) { 
-                sys.print('Error: ' + error + "\n");
-                sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
+                console.log('Error: ' + error + "\n");
+                console.log(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
              }
              else {
-               sys.puts(results.ok);
+               console.log(results.ok);
              }
        }
     );
@@ -440,11 +438,11 @@ and the original JSON could be retrieved using:
     mdbm.getJSON('mdbmTest','',
        function(error, results) {
           if (error) { 
-             sys.print('Error: ' + error + "\n"); 
-             sys.puts(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
+             console.log('Error: ' + error + "\n"); 
+             console.log(results.ErrorCode + ": " + results.ErrorMessage + "\n"); 
           }
           else {
-            sys.puts(JSON.stringify(results));
+            console.log(JSON.stringify(results));
           }
        }
     );
