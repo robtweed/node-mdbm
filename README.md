@@ -457,7 +457,7 @@ You need to install Node.js and the node-mdbm client as described earlier, but o
 
 - download the M/DB files from the **robtweed/mdb** repository (*http://github.com:robtweed/mdb.git*)
 
-- you'll find a directory named */cache* in the **robtweed/mdb** repository and inside it is a file named **mdb.ro**.  Use %RI or equivalent to install the MDB routines that it contains into your working namespace (eg USER)
+- you'll find a directory named */cache* in the **robtweed/mdb** repository and inside it is a file named **mdb.xml**.  Use $system.OBJ.Load(filePath) to install the M/DB and M/Wire routines that it contains into your working namespace (eg USER)
 
 - Run the following commands in a Cach&#233; terminal window (in your working namespace, eg USER):
 
