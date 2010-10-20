@@ -1,6 +1,6 @@
 { "name" : "node-mdbm"
 , "description" : "Client for accessing GT.M and Cache Globals (via secured HTTP)"
-, "version" : "0.0.8"
+, "version" : "0.1.1"
 , "author" : "Rob Tweed <rtweed@mgateway.com>"
 , "repository" :
   { "type" : "git"
