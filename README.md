@@ -26,6 +26,10 @@ GT.M is a particularly attractive option as it is available as a Free Open Sourc
 
 I've developed *node-mbdm* to make it possible for the growing Node.js community to benefit from the great flexibility and performance that these Global-based databases provide. The combination of Node.js and Globals is truly remarkable, and I'm hoping node-mdm will result in them becoming much better known for NoSQL database storage.
 
+*node-mdbm* is one of two Node.js clients available for GT.M and Cach&#233;.  It uses an HTTP-based interface that is based around the SimpleDB protocol, secured using an HMacSHA1 or HMacSHA256 signature.  The protocol has been adapted to allow responses to be returned as JSON documents rather than XML documents.
+
+An alternative client, node-mwire, which uses an adaptation of the Redis wire protocol, is also available.
+
 
 ##  Installing the Global-based back-end System
 
@@ -38,7 +42,7 @@ In order to use *node-mdbm* you'll need to have a have a Cach&#233; system or a 
 
 I've provided specific instructions for Cach&#233; at the end of this README file.  If you'd prefer to use the Free Open Source GT.M database, read on:
 
-The easiest way to get a GT.M system going is to use Mike Clayton's *M/DB installer* for Ubuntu Linux which will create you a fully-working environment within a few minutes.  You'll then just need to update M/DB, M/DB:Mumps and EWD and you'll have a GT.M database server that's ready for use with Node.js and node-mdbm.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.
+The easiest way to get a GT.M system going is to use Mike Clayton's *M/DB installer* for Ubuntu Linux which will create you a fully-working environment within a few minutes.  Node.js and node-mdm can reside on the same server as GT.M or on a different server.  Mike has also created an installer that will add Node.js and our node-mbdm and node-mwire modules, to create a complete front-end and back-end environment on a single server: ideal for testing and evaluation.
 
 The instructions below assume you'll be installing Node.js and node-mdbm on the same server.
 
@@ -46,71 +50,27 @@ You can apply Mike's installer to a Ubuntu Linux system running on your own hard
 
 So, for example, to create an M/DB Appliance using Amazon EC2:
 
-- Start up a Ubuntu Lucid (10.04) instance, eg use ami-6c06f305 and, to keep costs down, select a t1.micro instance
+- Start up a Ubuntu Lucid (10.04) instance, eg use ami-6c06f305 for a 32-bit server version
 - Now follow the instructions for installing the M/DB Appliance at [http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload](http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload)
 
 If you point a browser at the domain name/IP address assigned to the Ubuntu machine, you should now get the M/DB welcome screen.  **You'll need to initialise M/DB before you can use node-mdbm**.  Follow the instructions that you'll see in your browser for creating the */usr/MDB/MDB.conf* file and initialising M/DB.
 
-The M/DB system should now be working.  In order to enable it for use with Node.js and node-mdbm, you'll need to upgrade MDB.m, MDBMumps.m and EWD as follows:
-
-- Install git - we'll be needing this to fetch the various resources we need.  Here I've created a new directory */git* which is where I'll put all the respositories I download, but you can use whatever directory you wish:
-
-       sudo apt-get install git-core
-       cd /
-       sudo mkdir git
-	   sudo chmod 777 git
-       cd git
-
-- Update M/DB and M/DB:Mumps
-
-	   git clone git://github.com/robtweed/mdb.git
-    
-  Then copy all the files with *.m* file extensions from */usr/git/mdb* to */usr/local/gtm/ewd*, overwriting the original versions.
-
-	    cp /git/mdb/MDB*.m /usr/local/gtm/ewd
-
-- Update the EWD routines.  These provide M/DB:Mumps and M/DB with a variety of utility functions, eg for JSON processing
-
-	   git clone git://github.com/robtweed/EWD.git
-    
-  Then copy the routine files from */usr/git/EWD* to */usr/local/gtm/ewd*, overwriting the original versions.
-
-	    cp /git/EWD/*.m /usr/local/gtm/ewd
-	   
-At this point you have a GT.M-based Mumps server that is ready to access from a Node.js system via HTTP.
+The M/DB system should now be working and ready for use.  
 
 If you want to make a completely self-contained test system that also includes Node.js and node-mdbm, then continue as follows:
 	      
-- Install node.js:
-
-       sudo apt-get install g++ curl openssl libssl-dev apache2-utils
-       git clone git://github.com/ry/node.git
-       cd node
-       ./configure
-       make
-       sudo make install
-
-  Test it by running *node -v*.  If everything is installed and working correctly you'll see:
-  
-        $ node -v  
-        v0.3.0-pre
-
-  
-- Install npm (Node.js Package manager)
-
-        cd /git
-		sudo chown -R $USER /usr/local
-		curl http://npmjs.org/install.sh | sh
-	
-	Now install npm
-
-        npm install node-mdbm
+      cd /tmp
+      wget http://michaelgclayton.s3.amazonaws.com/mgwtools/node-mdbm-1.10_all.deb (Fetch the installer file)
+      sudo node-mdbm-1.10_all.deb (Ignore the errors that will be reported)
+      sudo apt-get -f install (and type y when asked)
+	  
+Note - the Node.js build process can take quite a long time and is very verbose.
 	
 OK! That's it all installed. You should now be ready to try out node-mdbm!
 
 ## Testing node-mdbm
 
-  In */usr/local/gtm/ewd* create a file named *test1.js* containing:
+  Create a file named *test1.js* (If you've used Mike's installer, create this file in */usr/local/gtm/ewd*).  The file should contain the following:
   
     var mdbmif = require("node-mdbm");
     var mdbm = new mdbmif.Client({
@@ -136,8 +96,8 @@ Now run it (from within */usr/local/gtm/ewd*).  If everything is working properl
 
     ubuntu@domU-12-31-39-09-B8-03:/usr/local/gtm/ewd$ node test1.js
     M/DB:Mumps
-    5
-    04 October 2010
+    7
+    13 October 2010
 
 If this is what you get, then you have Node.js successfully communicating with your GT.M database.
 	
@@ -176,8 +136,6 @@ Now you can use any of the node-mdbm APIs.
 - remoteFunction   (Execute a function within the GT.M or Cach&#233; system and return the response)
 - transaction   (Execute a sequence of Global manipulations in strict order, specified as an array of setJSON and kill JSON documents.)
 - version   (returns the M/DB:Mumps build number and date)
-
-With the exception of *version*, the APIs follow the same pattern:
 
 ## Commands
 
