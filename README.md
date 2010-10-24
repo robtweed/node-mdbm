@@ -50,7 +50,7 @@ You can apply Mike's installer to a Ubuntu Linux system running on your own hard
 
 So, for example, to create an M/DB Appliance using Amazon EC2:
 
-- Start up a Ubuntu Lucid (10.04) instance, eg use ami-508c7839 for a 32-bit server version
+- Start up a Ubuntu Lucid (10.10) instance, eg use ami-508c7839 for a 32-bit server version
 - Now follow the instructions for installing the M/DB Appliance at [http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload](http://gradvs1.mgateway.com/main/index.html?path=mdb/mdbDownload)
 
 If you point a browser at the domain name/IP address assigned to the Ubuntu machine, you should now get the M/DB welcome screen.  **You'll need to initialise M/DB before you can use node-mdbm**.  Follow the instructions that you'll see in your browser for creating the */usr/MDB/MDB.conf* file and initialising M/DB.
